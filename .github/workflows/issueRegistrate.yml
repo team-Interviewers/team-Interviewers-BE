@@ -15,5 +15,4 @@ jobs:
         with:
           project-url: https://github.com/orgs/team-Interviewers/projects/1
           github-token: ${{ secrets.PROJECT }}
-          labeled: backend
           label-operator: OR
