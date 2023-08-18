@@ -1,0 +1,19 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/team-Interviewers/projects/1
+          github-token: ${{ secrets.PROJECT }}
+          labeled: backend
+          label-operator: OR
