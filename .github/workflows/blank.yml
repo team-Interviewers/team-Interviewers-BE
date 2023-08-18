@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Assign to Project
+      run: |
+        issue_number="${{ github.event.issue.number }}"
+        project_id="team-interviewers"
+        column_id="Backlog"
+        gh api -X POST /projects/columns/$column_id/cards -F content_type=Issue -F content_id=$issue_number
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Add Label
+      run: |
+        issue_number="${{ github.event.issue.number }}"
+        gh api -X POST /repos/$GITHUB_REPOSITORY/issues/$issue_number/labels -F '["Backend"]'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
