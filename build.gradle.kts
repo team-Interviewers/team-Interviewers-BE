@@ -37,7 +37,10 @@ val kotestVersion = "5.7.2"
 dependencies {
     // web
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
     // db
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
