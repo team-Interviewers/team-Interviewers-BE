@@ -1,4 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
+    id("org.springframework.boot") version "3.1.4"
+    id("io.spring.dependency-management") version "1.1.3"
+    kotlin("plugin.spring") version "1.8.22"
+    kotlin("plugin.jpa") version "1.8.22"
     kotlin("jvm") version "1.9.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
     jacoco
@@ -8,7 +14,18 @@ jacoco {
     toolVersion = "0.8.8"
 }
 
-group = "org.livid"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
+}
+
+group = "org.interviewers"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -18,6 +35,14 @@ repositories {
 val kotestVersion = "5.7.2"
 
 dependencies {
+    // web
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    // db
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.mysql:mysql-connector-j")
+
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation(kotlin("test"))
